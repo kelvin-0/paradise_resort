@@ -3,17 +3,17 @@ import { NextResponse } from "next/server";
 import prisma from "@/app/libs/prismadb";
 import getCurrentUser from "@/app/actions/getCurrentUser";
 
-export async function POST(
-  request: Request, 
-) {
+export async function POST(request: Request) {
   const currentUser = await getCurrentUser();
 
   if (!currentUser) {
     return NextResponse.error();
   }
-
+  if (!currentUser.isAdmin) {
+    return NextResponse.error();
+  }
   const body = await request.json();
-  const { 
+  const {
     title,
     description,
     imageSrc,
@@ -21,9 +21,8 @@ export async function POST(
     roomCount,
     bathroomCount,
     guestCount,
-    location,
     price,
-   } = body;
+  } = body;
 
   Object.keys(body).forEach((value: any) => {
     if (!body[value]) {
@@ -40,10 +39,9 @@ export async function POST(
       roomCount,
       bathroomCount,
       guestCount,
-      locationValue: location.value,
       price: parseInt(price, 10),
-      userId: currentUser.id
-    }
+      userId: currentUser.id,
+    },
   });
 
   return NextResponse.json(listing);

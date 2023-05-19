@@ -1,4 +1,4 @@
-'use client';
+"use client";
 
 import { useCallback, useState } from "react";
 import { AiOutlineMenu } from "react-icons/ai";
@@ -14,12 +14,10 @@ import MenuItem from "./MenuItem";
 import Avatar from "../Avatar";
 
 interface UserMenuProps {
-  currentUser?: SafeUser | null
+  currentUser?: SafeUser | null;
 }
 
-const UserMenu: React.FC<UserMenuProps> = ({
-  currentUser
-}) => {
+const UserMenu: React.FC<UserMenuProps> = ({ currentUser }) => {
   const router = useRouter();
 
   const loginModal = useLoginModal();
@@ -40,29 +38,39 @@ const UserMenu: React.FC<UserMenuProps> = ({
     rentModal.onOpen();
   }, [loginModal, rentModal, currentUser]);
 
-  return ( 
-    <div className="relative">
+  return (
+    <div className="relative md:ml-auto">
       <div className="flex flex-row items-center gap-3">
-        <div 
-          onClick={onRent}
-          className="
-            hidden
-            md:block
-            text-sm 
-            font-semibold 
-            py-3 
-            px-4 
-            rounded-full 
-            hover:bg-neutral-100 
-            transition 
+        {currentUser?.isAdmin && (
+          <div
+            onClick={onRent}
+            className="
+          flex px-6 py-2 border gap-3 uppercase items-center 
+
             cursor-pointer
           "
-        >
-          Airbnb your home
-        </div>
-        <div 
-        onClick={toggleOpen}
-        className="
+          >
+            sewa
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 24 24"
+              strokeWidth={1.5}
+              stroke="currentColor"
+              className="w-6 h-6 text-custom-orange"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                d="M17.25 8.25L21 12m0 0l-3.75 3.75M21 12H3"
+              />
+            </svg>
+          </div>
+        )}
+
+        <div
+          onClick={toggleOpen}
+          className="
           p-4
           md:py-1
           md:px-2
@@ -79,72 +87,69 @@ const UserMenu: React.FC<UserMenuProps> = ({
           "
         >
           <AiOutlineMenu />
+          <p>{currentUser?.name}</p>
           <div className="hidden md:block">
             <Avatar src={currentUser?.image} />
           </div>
         </div>
       </div>
       {isOpen && (
-        <div 
+        <div
           className="
             absolute 
             rounded-xl 
             shadow-md
-            w-[40vw]
-            md:w-3/4 
+            w-[30vw]
+            md:w-[20vw]
             bg-white 
             overflow-hidden 
             right-0 
             top-12 
             text-sm
+            text-slate-900
           "
         >
           <div className="flex flex-col cursor-pointer">
             {currentUser ? (
-              <>
-                <MenuItem 
-                  label="My trips" 
-                  onClick={() => router.push('/trips')}
-                />
-                <MenuItem 
-                  label="My favorites" 
-                  onClick={() => router.push('/favorites')}
-                />
-                <MenuItem 
-                  label="My reservations" 
-                  onClick={() => router.push('/reservations')}
-                />
-                <MenuItem 
-                  label="My properties" 
-                  onClick={() => router.push('/properties')}
-                />
-                <MenuItem 
-                  label="Airbnb your home" 
-                  onClick={rentModal.onOpen}
-                />
-                <hr />
-                <MenuItem 
-                  label="Logout" 
-                  onClick={() => signOut()}
-                />
-              </>
+              currentUser.isAdmin ? (
+                <>
+                  <MenuItem
+                    label="Kamar saya"
+                    onClick={() => router.push("/properties")}
+                  />
+                  <MenuItem label="Sewa kamar" onClick={rentModal.onOpen} />
+                  <MenuItem
+                    label="Reservasi saya"
+                    onClick={() => router.push("/reservations")}
+                  />
+                  <hr />
+                  <MenuItem label="Logout" onClick={() => signOut()} />
+                </>
+              ) : (
+                <>
+                  <MenuItem
+                    label="Pesanan saya"
+                    onClick={() => router.push("/trips")}
+                  />
+                  <MenuItem
+                    label="Kamar favorit"
+                    onClick={() => router.push("/favorites")}
+                  />
+                  <hr />
+                  <MenuItem label="Logout" onClick={() => signOut()} />
+                </>
+              )
             ) : (
               <>
-                <MenuItem 
-                  label="Login" 
-                  onClick={loginModal.onOpen}
-                />
-                <MenuItem 
-                  label="Sign up" 
-                  onClick={registerModal.onOpen}
-                />
+                <MenuItem label="Login" onClick={loginModal.onOpen} />
+                <MenuItem label="Sign up" onClick={registerModal.onOpen} />
               </>
             )}
           </div>
         </div>
       )}
     </div>
-   );
-}
- 
+  );
+};
+
 export default UserMenu;

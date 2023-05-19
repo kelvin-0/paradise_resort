@@ -1,30 +1,22 @@
-'use client';
+"use client";
 
-import { useSearchParams } from 'next/navigation';
-import { useMemo } from 'react';
-import { BiSearch } from 'react-icons/bi';
-import { differenceInDays } from 'date-fns';
+import { usePathname, useSearchParams } from "next/navigation";
+import { useMemo } from "react";
+import { BiSearch } from "react-icons/bi";
+import { differenceInDays } from "date-fns";
 
-import useSearchModal from '@/app/hooks/useSearchModal';
-import useCountries from '@/app/hooks/useCountries';
+import useSearchModal from "@/app/hooks/useSearchModal";
+import useCountries from "@/app/hooks/useCountries";
 
 const Search = () => {
   const searchModal = useSearchModal();
   const params = useSearchParams();
-  const { getByValue } = useCountries();
+  const pathName = usePathname();
 
-  const  locationValue = params?.get('locationValue'); 
-  const  startDate = params?.get('startDate');
-  const  endDate = params?.get('endDate');
-  const  guestCount = params?.get('guestCount');
-
-  const locationLabel = useMemo(() => {
-    if (locationValue) {
-      return getByValue(locationValue as string)?.label;
-    }
-
-    return 'Anywhere';
-  }, [locationValue, getByValue]);
+  const startDate = params?.get("startDate");
+  const endDate = params?.get("endDate");
+  const guestCount = params?.get("guestCount");
+  const roomCount = params?.get("roomCount");
 
   const durationLabel = useMemo(() => {
     if (startDate && endDate) {
@@ -36,26 +28,33 @@ const Search = () => {
         diff = 1;
       }
 
-      return `${diff} Days`;
+      return `${diff} Hari`;
     }
 
-    return 'Any Week'
+    return "Hari";
   }, [startDate, endDate]);
-
+  const roomLabel = useMemo(() => {
+    if (roomCount) {
+      return `${roomCount} Beds`;
+    }
+    return "Beds";
+  }, [roomCount]);
   const guestLabel = useMemo(() => {
     if (guestCount) {
-      return `${guestCount} Guests`;
+      return `${guestCount} Tamu`;
     }
 
-    return 'Add Guests';
+    return "Tamu";
   }, [guestCount]);
-
-  return ( 
+  if (pathName !== "/rooms") {
+    return <></>;
+  }
+  return (
     <div
       onClick={searchModal.onOpen}
       className="
+      mt-12
         border-[1px] 
-        w-full 
         md:w-auto 
         py-2 
         rounded-full 
@@ -65,7 +64,7 @@ const Search = () => {
         cursor-pointer
       "
     >
-      <div 
+      <div
         className="
           flex 
           flex-row 
@@ -73,19 +72,18 @@ const Search = () => {
           justify-between
         "
       >
-        <div 
+        <div
           className="
             text-sm 
             font-semibold 
             px-6
           "
         >
-          {locationLabel}
+          {roomLabel}
         </div>
-        <div 
+        <div
           className="
-            hidden 
-            sm:block 
+block 
             text-sm 
             font-semibold 
             px-6 
@@ -96,7 +94,7 @@ const Search = () => {
         >
           {durationLabel}
         </div>
-        <div 
+        <div
           className="
             text-sm 
             pl-6 
@@ -108,11 +106,11 @@ const Search = () => {
             gap-3
           "
         >
-          <div className="hidden sm:block">{guestLabel}</div>
-          <div 
+          <div className="block">{guestLabel}</div>
+          <div
             className="
               p-2 
-              bg-rose-500 
+              bg-blue-500 
               rounded-full 
               text-white
             "
@@ -123,6 +121,6 @@ const Search = () => {
       </div>
     </div>
   );
-}
- 
+};
+
 export default Search;
