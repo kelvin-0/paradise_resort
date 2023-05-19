@@ -1,3 +1,4 @@
+export const dynamic = "force-dynamic";
 import Container from "@/app/components/Container";
 import ListingCard from "@/app/components/listings/ListingCard";
 import EmptyState from "@/app/components/EmptyState";
@@ -8,11 +9,7 @@ import ClientOnly from "./components/ClientOnly";
 import Section from "./components/Section";
 import Carousel from "./components/Carousel";
 
-interface HomeProps {
-  searchParams: IListingsParams;
-}
-
-const Home = async ({ searchParams }: HomeProps) => {
+const Home = async () => {
   const currentUser = await getCurrentUser();
 
   return (
