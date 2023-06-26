@@ -61,30 +61,50 @@ const ListingClient: React.FC<ListingClientProps> = ({
   const [totalPrice, setTotalPrice] = useState(listing.price);
   const [dateRange, setDateRange] = useState<Range>(initialDateRange);
 
-  const onCreateReservation = useCallback(() => {
+  const onCreateReservation = useCallback(async () => {
     if (!currentUser) {
       return loginModal.onOpen();
     }
     setIsLoading(true);
 
-    axios
-      .post("/api/reservations", {
+    try {
+      const { data } = await axios.post("/api/reservations", {
         totalPrice,
         startDate: dateRange.startDate,
         endDate: dateRange.endDate,
         listingId: listing?.id,
-      })
-      .then(() => {
-        toast.success("Kamar dipesan!");
-        setDateRange(initialDateRange);
-        router.push("/trips");
-      })
-      .catch(() => {
-        toast.error("Ada yang salah.");
-      })
-      .finally(() => {
-        setIsLoading(false);
       });
+      const redirect_url = data.redirect_url.redirect_url;
+      console.log(redirect_url);
+      toast.success("Kamar dipesan!");
+      setDateRange(initialDateRange);
+      router.push(redirect_url);
+      // router.push("/trips");
+    } catch {
+      toast.error("Ada yang salah.");
+    } finally {
+      setIsLoading(false);
+    }
+    // const response = await axios
+    //   .post("/api/reservations", {
+    //     totalPrice,
+    //     startDate: dateRange.startDate,
+    //     endDate: dateRange.endDate,
+    //     listingId: listing?.id,
+    //   })
+    //   .then((redirect_url: any) => {
+    //     console.log(redirect_url);
+    //     toast.success("Kamar dipesan!");
+    //     setDateRange(initialDateRange);
+    //     router.push(redirect_url);
+    //     router.push("/trips");
+    //   })
+    //   .catch(() => {
+    //     toast.error("Ada yang salah.");
+    //   })
+    //   .finally(() => {
+    //     setIsLoading(false);
+    //   });
   }, [totalPrice, dateRange, listing?.id, router, currentUser, loginModal]);
 
   useEffect(() => {
