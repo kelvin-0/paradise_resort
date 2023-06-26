@@ -1,3 +1,5 @@
+import { useSearchParams } from "next/navigation";
+import { toast } from "react-hot-toast";
 import EmptyState from "@/app/components/EmptyState";
 import ClientOnly from "@/app/components/ClientOnly";
 
@@ -8,12 +10,18 @@ import TripsClient from "./TripsClient";
 
 const TripsPage = async () => {
   const currentUser = await getCurrentUser();
+  const searchParams = useSearchParams();
+  const statusCode = searchParams?.get("status_code") || "";
+  const transaction_status = searchParams?.get("transaction_status");
   if (!currentUser) {
     return (
       <ClientOnly>
         <EmptyState title="Unauthorized" subtitle="Please login" />
       </ClientOnly>
     );
+  }
+  if (statusCode === "200" && transaction_status === "capture") {
+    toast.success("Kamar dipesan!");
   }
   const reservations = await getReservations({ userId: currentUser.id });
 
