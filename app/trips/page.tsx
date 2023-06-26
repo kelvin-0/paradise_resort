@@ -19,8 +19,8 @@ const TripsPage = async () => {
     );
   }
   if (
-    router.query.statusCode &&
-    router.query.transaction_status === "capture"
+    router?.query?.statusCode &&
+    router?.query?.transaction_status === "capture"
   ) {
     toast.success("Kamar dipesan!");
   }
