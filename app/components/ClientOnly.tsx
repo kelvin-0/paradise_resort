@@ -11,18 +11,17 @@ interface ClientOnlyProps {
 const ClientOnly: React.FC<ClientOnlyProps> = ({ children }) => {
   const router = useRouter();
   const [hasMounted, setHasMounted] = useState(false);
+  useEffect(() => {
+    setHasMounted(true);
+  }, []);
+
+  if (!hasMounted) return null;
   if (
     router?.query?.statusCode &&
     router?.query?.transaction_status === "capture"
   ) {
     toast.success("Kamar dipesan!");
   }
-  useEffect(() => {
-    setHasMounted(true);
-  }, []);
-
-  if (!hasMounted) return null;
-
   return <div className="">{children}</div>;
 };
 
