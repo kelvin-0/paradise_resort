@@ -75,8 +75,6 @@ const ListingClient: React.FC<ListingClientProps> = ({
         listingId: listing?.id,
       });
       const redirect_url = data.redirect_url.redirect_url;
-      console.log(redirect_url);
-      toast.success("Kamar dipesan!");
       setDateRange(initialDateRange);
       router.push(redirect_url);
       // router.push("/trips");
