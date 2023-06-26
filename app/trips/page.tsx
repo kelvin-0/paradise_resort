@@ -1,4 +1,4 @@
-import { useRouter } from "next/router";
+import { useRouter } from "next/navigation";
 import EmptyState from "@/app/components/EmptyState";
 import ClientOnly from "@/app/components/ClientOnly";
 
@@ -19,8 +19,8 @@ const TripsPage = async () => {
     );
   }
   if (
-    router.query.statusCode &&
-    router.query.transaction_status === "capture"
+    router?.query?.statusCode &&
+    router?.query?.transaction_status === "capture"
   ) {
     toast.success("Kamar dipesan!");
   }
