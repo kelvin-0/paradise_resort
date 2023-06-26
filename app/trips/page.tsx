@@ -8,6 +8,7 @@ import TripsClient from "./TripsClient";
 
 const TripsPage = async () => {
   const currentUser = await getCurrentUser();
+
   if (!currentUser) {
     return (
       <ClientOnly>

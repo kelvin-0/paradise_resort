@@ -42,25 +42,29 @@ export async function POST(request: Request) {
       first_name: currentUser.name || currentUser.email,
       email: currentUser.email,
     },
+    item_details: {
+      id: listingId,
+      price: totalPrice,
+      name: startDate + "-" + endDate,
+    },
   };
 
   const redirect_url = await snap.createTransaction(parameter);
-
-  // const listingAndReservation = await prisma.listing.update({
-  //   where: {
-  //     id: listingId,
-  //   },
-  //   data: {
-  //     reservations: {
-  //       create: {
-  //         userId: currentUser.id,
-  //         startDate,
-  //         endDate,
-  //         totalPrice,
-  //       },
-  //     },
-  //   },
-  // });
+  const listingAndReservation = await prisma.listing.update({
+    where: {
+      id: listingId,
+    },
+    data: {
+      reservations: {
+        create: {
+          userId: currentUser.id,
+          startDate,
+          endDate,
+          totalPrice,
+        },
+      },
+    },
+  });
   console.log(redirect_url);
   return NextResponse.json({ redirect_url });
 }

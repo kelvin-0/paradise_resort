@@ -1,5 +1,5 @@
 "use client";
-
+import { useSearchParams } from "next/navigation";
 import { toast } from "react-hot-toast";
 import axios from "axios";
 import { useCallback, useState } from "react";
@@ -21,6 +21,9 @@ const TripsClient: React.FC<TripsClientProps> = ({
   currentUser,
 }) => {
   const router = useRouter();
+  const searchParams = useSearchParams();
+  const statusCode = searchParams?.get("status_code") || "";
+  const transaction_status = searchParams?.get("transaction_status");
   const [deletingId, setDeletingId] = useState("");
 
   const onCancel = useCallback(
@@ -42,7 +45,9 @@ const TripsClient: React.FC<TripsClientProps> = ({
     },
     [router]
   );
-
+  if (statusCode === "200" && transaction_status === "capture") {
+    toast.success("Kamar dipesan!");
+  }
   return (
     <Container>
       <section className="bg-custom-human-skin pt-24 pb-10 px-16">
