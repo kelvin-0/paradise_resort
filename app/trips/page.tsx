@@ -1,4 +1,3 @@
-import { useRouter } from "next/navigation";
 import EmptyState from "@/app/components/EmptyState";
 import ClientOnly from "@/app/components/ClientOnly";
 
@@ -6,23 +5,15 @@ import getCurrentUser from "@/app/actions/getCurrentUser";
 import getReservations from "@/app/actions/getReservations";
 
 import TripsClient from "./TripsClient";
-import { toast } from "react-hot-toast";
 
 const TripsPage = async () => {
   const currentUser = await getCurrentUser();
-  const router = useRouter();
   if (!currentUser) {
     return (
       <ClientOnly>
         <EmptyState title="Unauthorized" subtitle="Please login" />
       </ClientOnly>
     );
-  }
-  if (
-    router?.query?.statusCode &&
-    router?.query?.transaction_status === "capture"
-  ) {
-    toast.success("Kamar dipesan!");
   }
   const reservations = await getReservations({ userId: currentUser.id });
 
