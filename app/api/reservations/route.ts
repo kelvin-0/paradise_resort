@@ -42,13 +42,13 @@ export async function POST(request: Request) {
       first_name: currentUser.name || currentUser.email,
       email: currentUser.email,
     },
-    item_details: [
-      {
-        id: listingId,
-        price: totalPrice,
-        name: startDate + "-" + endDate,
-      },
-    ],
+    // item_details: [
+    //   {
+    //     id: listingId,
+    //     price: totalPrice,
+    //     name: startDate + "-" + endDate,
+    //   },
+    // ],
   };
 
   const redirect_url = await snap.createTransaction(parameter);
