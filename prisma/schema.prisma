@@ -64,7 +64,6 @@ model Listing {
 }
 
 model Reservation {
-  transactionId String 
   id String @id @default(auto()) @map("_id") @db.ObjectId
   userId String @db.ObjectId
   listingId String @db.ObjectId  
@@ -72,6 +71,7 @@ model Reservation {
   endDate DateTime
   totalPrice Int
   createdAt DateTime @default(now())
+  transactionId String 
 
   user User @relation(fields: [userId], references: [id], onDelete: Cascade)
   listing Listing @relation(fields: [listingId], references: [id], onDelete: Cascade)
