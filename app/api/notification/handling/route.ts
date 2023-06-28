@@ -56,6 +56,11 @@ export async function POST(request: Request) {
       } else if (transactionStatus == "pending") {
         // TODO set transaction status on your database to 'pending' / waiting payment
         // and response with 200 OK
+        const reservation = await prisma.reservation.deleteMany({
+          where: {
+            transactionId: reservationId,
+          },
+        });
         return NextResponse.json({ success: true });
       }
     });
