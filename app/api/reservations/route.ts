@@ -18,6 +18,7 @@ console.log(snap);
 
 export async function POST(request: Request) {
   const currentUser = await getCurrentUser();
+  const randomId = uuidv4();
 
   if (!currentUser) {
     return NextResponse.error();
@@ -32,7 +33,7 @@ export async function POST(request: Request) {
 
   let parameter = {
     transaction_details: {
-      order_id: `ORDER-${uuidv4()}`,
+      order_id: `ORDER${listingId}-${randomId}`,
       gross_amount: totalPrice,
     },
     credit_card: {
@@ -59,6 +60,7 @@ export async function POST(request: Request) {
     data: {
       reservations: {
         create: {
+          id: randomId,
           userId: currentUser.id,
           startDate,
           endDate,
