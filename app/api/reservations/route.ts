@@ -33,7 +33,7 @@ export async function POST(request: Request) {
 
   let parameter = {
     transaction_details: {
-      order_id: `ORDER${listingId}-${randomId}`,
+      order_id: `ORDER-${randomId}`,
       gross_amount: totalPrice,
     },
     credit_card: {
@@ -53,22 +53,26 @@ export async function POST(request: Request) {
   };
 
   const redirect_url = await snap.createTransaction(parameter);
-  const listingAndReservation = await prisma.listing.update({
-    where: {
-      id: listingId,
-    },
-    data: {
-      reservations: {
-        create: {
-          id: randomId,
-          userId: currentUser.id,
-          startDate,
-          endDate,
-          totalPrice,
+  try {
+    const listingAndReservation = await prisma.listing.update({
+      where: {
+        id: listingId,
+      },
+      data: {
+        reservations: {
+          create: {
+            id: randomId,
+            userId: currentUser.id,
+            startDate,
+            endDate,
+            totalPrice,
+          },
         },
       },
-    },
-  });
+    });
+  } catch (error) {
+    return NextResponse.json({ error });
+  }
   console.log(redirect_url);
   return NextResponse.json({ redirect_url });
 }
