@@ -1,6 +1,7 @@
 import { NextResponse } from "next/server";
 
 import prisma from "@/app/libs/prismadb";
+import { PrismaClient, Prisma } from "@prisma/client";
 import getCurrentUser from "@/app/actions/getCurrentUser";
 // @ts-ignore
 import midtransClient from "midtrans-client";
@@ -61,7 +62,7 @@ export async function POST(request: Request) {
       data: {
         reservations: {
           create: {
-            id: randomId,
+            transactionId: randomId,
             userId: currentUser.id,
             startDate,
             endDate,

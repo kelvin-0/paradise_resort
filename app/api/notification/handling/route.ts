@@ -48,7 +48,7 @@ export async function POST(request: Request) {
         // TODO set transaction status on your database to 'failure'
         const reservation = await prisma.reservation.deleteMany({
           where: {
-            id: reservationId,
+            transactionId: reservationId,
           },
         });
         // and response with 200 OK
