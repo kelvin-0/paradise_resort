@@ -27,7 +27,7 @@ const TripsClient: React.FC<TripsClientProps> = ({
   const transaction_status = searchParams?.get("transaction_status");
   const [deletingId, setDeletingId] = useState("");
   const cancelModal = useCancelModal();
-
+  const [firstTimeValue, setFirstTimeValue] = useState(1);
   const [isOpen, setIsOpen] = useState(false);
 
   const toggleOpen = useCallback(() => {
@@ -60,9 +60,13 @@ const TripsClient: React.FC<TripsClientProps> = ({
   //   },
   //   [router]
   // );
-  if (statusCode === "200" && transaction_status === "capture") {
+  if (
+    statusCode === "200" &&
+    transaction_status === "capture" &&
+    firstTimeValue === 1
+  ) {
     toast.success("Kamar dipesan!");
-    statusCode = "done";
+    setFirstTimeValue((value) => value + 1);
   }
   return (
     <Container>

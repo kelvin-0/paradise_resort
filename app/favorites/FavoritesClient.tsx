@@ -16,7 +16,7 @@ const FavoritesClient: React.FC<FavoritesClientProps> = ({
   return (
     <Container>
       <section className="bg-custom-human-skin pt-24 pb-10 px-16">
-        <Heading title="Favorites" subtitle="List of places you favorited!" />
+        <Heading title="Favorites" subtitle="Daftar kamar favorit anda!" />
         <div
           className="
           mt-10
