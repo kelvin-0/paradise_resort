@@ -23,7 +23,7 @@ const TripsClient: React.FC<TripsClientProps> = ({
 }) => {
   const router = useRouter();
   const searchParams = useSearchParams();
-  const statusCode = searchParams?.get("status_code") || "";
+  let statusCode = searchParams?.get("status_code") || "";
   const transaction_status = searchParams?.get("transaction_status");
   const [deletingId, setDeletingId] = useState("");
   const cancelModal = useCancelModal();
@@ -62,6 +62,7 @@ const TripsClient: React.FC<TripsClientProps> = ({
   // );
   if (statusCode === "200" && transaction_status === "capture") {
     toast.success("Kamar dipesan!");
+    statusCode = "done";
   }
   return (
     <Container>
