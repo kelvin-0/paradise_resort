@@ -61,7 +61,10 @@ const LoginModal = () => {
 
   const bodyContent = (
     <div className="flex flex-col gap-4">
-      <Heading title="Selamat datang" subtitle="Login ke akun anda!" />
+      <Heading
+        title="Selamat datang di Hotel Paradise Resort"
+        subtitle="Login ke akun anda!"
+      />
       <Input
         id="email"
         label="Email"
