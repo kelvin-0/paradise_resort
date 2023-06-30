@@ -74,7 +74,7 @@ const Home = async () => {
                   <span className="text-4xl">M</span>ODERN
                 </p>
                 <p>
-                  <span className="text-4xl">M</span>EKSKLUSIF
+                  <span className="text-4xl">E</span>KSKLUSIF
                 </p>
               </div>
             </div>

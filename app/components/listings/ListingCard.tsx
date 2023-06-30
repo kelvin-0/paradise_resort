@@ -20,6 +20,7 @@ interface ListingCardProps {
   actionLabel?: string;
   actionId?: string;
   currentUser?: SafeUser | null;
+  isCancel?: boolean;
 }
 
 const ListingCard: React.FC<ListingCardProps> = ({
@@ -30,6 +31,7 @@ const ListingCard: React.FC<ListingCardProps> = ({
   actionLabel,
   actionId = "",
   currentUser,
+  isCancel,
 }) => {
   const router = useRouter();
 
@@ -116,6 +118,7 @@ const ListingCard: React.FC<ListingCardProps> = ({
             small
             label={actionLabel}
             onClick={handleCancel}
+            isCancel
           />
         )}
       </div>
