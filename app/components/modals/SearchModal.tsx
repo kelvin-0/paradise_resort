@@ -140,7 +140,7 @@ const SearchModal = () => {
       <div className="flex flex-col gap-8">
         <Heading
           title="Kapan anda berencana untuk pergi?"
-          subtitle="Pastikan anda bebas"
+          subtitle="Pastikan jadwal perjalanan Anda"
         />
         <Calendar
           onChange={(value) => setDateRange(value.selection)}

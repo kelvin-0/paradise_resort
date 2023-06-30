@@ -47,10 +47,10 @@ const UserMenu: React.FC<UserMenuProps> = ({ currentUser }) => {
             className="
           flex px-6 py-2 border gap-3 uppercase items-center 
 
-            cursor-pointer
+            cursor-pointer rounded-full
           "
           >
-            sewa
+            Tambah Kamar
             <svg
               xmlns="http://www.w3.org/2000/svg"
               fill="none"
@@ -114,12 +114,12 @@ const UserMenu: React.FC<UserMenuProps> = ({ currentUser }) => {
               currentUser.isAdmin ? (
                 <>
                   <MenuItem
-                    label="Kamar saya"
+                    label="Kelola Kamar"
                     onClick={() => router.push("/properties")}
                   />
-                  <MenuItem label="Sewa kamar" onClick={rentModal.onOpen} />
+                  <MenuItem label="Tambah Kamar" onClick={rentModal.onOpen} />
                   <MenuItem
-                    label="Reservasi saya"
+                    label="Reservasi Kamar"
                     onClick={() => router.push("/reservations")}
                   />
                   <hr />

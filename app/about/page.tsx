@@ -20,11 +20,6 @@ const About = async () => {
             kami.
           </p>
         </Section>
-        <Section title="Fasilitas">
-          <div className="max-w-lg mx-auto mt-10">
-            <Carousel />
-          </div>
-        </Section>
       </Container>
     </ClientOnly>
   );

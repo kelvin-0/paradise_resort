@@ -10,6 +10,9 @@ let apiClient = new midtransClient.Snap({
 
 import prisma from "@/app/libs/prismadb";
 // import getCurrentUser from "@/app/actions/getCurrentUser";
+export async function GET() {
+  return NextResponse.json("hello");
+}
 
 export async function POST(request: Request) {
   apiClient.transaction
