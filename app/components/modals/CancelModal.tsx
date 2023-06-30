@@ -67,6 +67,7 @@ const CancelModal = () => {
       .finally(() => {
         cancelModal.valueid = "";
       });
+    cancelModal.onClose();
   };
 
   let bodyContent = (
